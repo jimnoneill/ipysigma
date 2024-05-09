@@ -259,6 +259,8 @@ class Sigma(DOMWidget):
             Defaults to None.
         node_label (VariableData, optional): data to be used as node label.
             Defaults to None.
+        node_description (VariableData, optional): data to be used as node description.
+            Defaults to None.
         raw_node_label (VariableData, optional): raw data (label string) to be used for node labels.
             Defaults to "label".
         default_node_label (str, optional): default label for nodes.
@@ -510,6 +512,9 @@ class Sigma(DOMWidget):
         raw_node_label="label",
         node_label=None,
         default_node_label=None,
+        raw_node_description="description",
+        node_description=None,
+        default_node_description=None,
         # Node label size
         node_label_size=None,
         raw_node_label_size=None,
@@ -763,6 +768,10 @@ class Sigma(DOMWidget):
         visual_variables_builder.build_raw(
             "nodeLabel", node_label, raw_node_label, default=default_node_label
         )
+        visual_variables_builder.build_raw2(
+            "nodeDescription", node_description, raw_node_description, default=default_node_description
+        )
+
         visual_variables_builder.build_continuous(
             "nodeLabelSize",
             node_label_size,
