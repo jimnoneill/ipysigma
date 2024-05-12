@@ -230,16 +230,28 @@ function isValidNumber(value: any): boolean {
 }
 
 function escapeHtml(unsafe: string): string {
-  return ('' + unsafe)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
+  // Split the string by <br> tags
+  console.log(unsafe)
+  const parts = unsafe.split(/<br>/gi);
+
+  // Escape each part individually
+  const escapedParts = parts.map(part => 
+    part
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;')
+  );
+
+  // Join the parts back together with <br> tags
+  return escapedParts.join('<br>');
 }
+
 
 function renderTypedValue(value: any): string {
   let safe = escapeHtml('' + value);
+  console.log("Debugging HTML Output:", safe); // Debug line to check the HTML
 
   let type = 'unknown';
 
@@ -1353,8 +1365,23 @@ export class SigmaView extends DOMWidgetView {
       );
     }
 
-    if (kwargInfo.length !== 0)
-      innerHTML += '<hr>From kwargs:<br>' + kwargInfo.join('<br>');
+	function processKwargInfo(input: string[]): string {
+	  return input.map(entry => {
+	    // Check if the entry contains `<br>`
+	    if (entry.includes('<br>')) {
+	      // Allow the HTML by sanitizing all except `<br>`
+	      return entry.replace(/<br>/gi, 'TEMPBR').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/TEMPBR/gi, '<br>');
+	    } else {
+	      // Standard escaping
+	      return escapeHtml(entry);
+	    }
+	  }).join('<br>');
+	}
+
+if (kwargInfo.length !== 0) {
+  innerHTML += '<hr>From kwargs:<br>' + processKwargInfo(kwargInfo);
+}
+
     if (info.length !== 0)
       innerHTML += `<hr>Attributes:<br>` + info.join('<br>');
     if (vizInfo.length !== 0)

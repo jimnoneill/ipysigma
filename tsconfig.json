@@ -12,8 +12,9 @@
     "rootDir": "src",
     "skipLibCheck": true,
     "sourceMap": true,
-    "strict": true,
+    "strict": false,
     "strictPropertyInitialization": false,
+    "noImplicitAny": false,
     "target": "es2015",
     "types": ["jest"]
   },

@@ -12830,8 +12830,25 @@ define([ "@jupyter-widgets/base" ], e => (() => {
             function H(e) {
                 return ("" + e).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
             }
+            function H_modified(e) {
+                // First replace line breaks with a placeholder
+                e = ("" + e).replace(/<br>/g, "PLACEHOLDER_FOR_BR");
+
+                // Escape all other HTML as before
+                e = e.replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
+
+                // Restore line breaks
+                e = e.replace(/PLACEHOLDER_FOR_BR/g, "<br>");
+
+                return e;
+            }
+
             function V(e) {
-                let t = H("" + e), n = "unknown";
+                let t = H_modified("" + e), n = "unknown";
                 return "number" == typeof e ? n = "number" : "string" == typeof e ? n = "string" : "boolean" == typeof e ? (n = "boolean", 
                 t = e ? "True" : "False") : null === e && (n = "keyword", t = "null"), 
                 `<span class="ipysigma-${n}" title="${n}">${t}</span>`;
@@ -12921,7 +12938,7 @@ define([ "@jupyter-widgets/base" ], e => (() => {
                     this.container.style.width = "100%", this.container.style.height = e, 
                     this.el.querySelector(".ipysigma-graph-description").innerHTML = function(e, t) {
                         let n = "";
-                        return e && (n += `<u>${H(e)}</u><br>`), n += `${t.multi ? "Multi " : ""}${"undirected" === t.type ? "Undirected" : "Directed"} Graph<br><b>${(0, 
+                        return e && (n += `<u>${H_modified(e)}</u><br>`), n += `${t.multi ? "Multi " : ""}${"undirected" === t.type ? "Undirected" : "Directed"} Graph<br><b>${(0,
                         M.default)(t.order)}</b> nodes<br><b>${(0, M.default)(t.size)}</b> edges`, 
                         n;
                     }(n, i), this.zoomButton = this.el.querySelector(".ipysigma-zoom-button"), 
@@ -12934,18 +12951,18 @@ define([ "@jupyter-widgets/base" ], e => (() => {
                     this.resetLayoutButton = this.el.querySelector(".ipysigma-reset-layout-button");
                     var S = this.el.querySelector(".ipysigma-search");
                     const C = this.model.get("visual_variables").nodeLabel.attribute, L = i.mapNodes((e, t) => {
-                        let n = [ H(e) ];
+                        let n = [ H_modified(e) ];
                         const r = t[C];
-                        return r && r !== e && n.push(` <small style="font-size: 75%;">${H(r)}</small>`), 
+                        return r && r !== e && n.push(` <small style="font-size: 75%;">${H_modified(r)}</small>`),
                         {
                             value: e,
                             label: n.join(" ")
                         };
                     });
                     const DD = this.model.get("visual_variables").nodeDescription.attribute, M = i.mapNodes((e, t) => {
-                        let n = [ H(e) ];
+                        let n = [ H_modified(e) ];
                         const d = t[DD];
-                        if (d && d !== e) n.push(` <small style="font-size: 75%;">${H(d)}</small>`);
+                        if (d && d !== e) n.push(` <small style="font-size: 75%;">${H_modified(d)}</small>`);
                         return {
                             value: e,
                             description: n.join(" ")
@@ -13058,8 +13075,8 @@ define([ "@jupyter-widgets/base" ], e => (() => {
                             this.selectedEdge && (o.hidden = e !== this.selectedEdge), 
                             o;
                         }, this.renderer = new h.default(i, this.container, L);
-                        const W = this.model.get("ui_settings"), H = this.model.get("camera_state");
-                        this.renderer.getCamera().setState(H);
+                        const W = this.model.get("ui_settings"), H_modified = this.model.get("camera_state");
+                        this.renderer.getCamera().setState(H_modified);
                         const V = this.model.get("selected_node"), Y = this.model.get("selected_edge");
                         if (V ? this.selectItem("node", V) : Y ? this.selectItem("edge", i.edge(Y[0], Y[1])) : this.clearSelectedItem(), 
                         W.hideInfoPanel && this.toggleInformationDisplay(), W.hideSearch && (this.choices.destroy(), 
@@ -13116,9 +13133,9 @@ define([ "@jupyter-widgets/base" ], e => (() => {
                         let s = `<b>${t}</b><br>`;
                         if ("dependent" === i.type) s += `based on <span class="ipysigma-keyword">${i.value}</span> color`; else {
                             const t = i.attribute.startsWith(j) ? "kwarg" : "attribute", c = i.attribute.startsWith(j) ? i.attribute.slice(j.length) : i.attribute;
-                            if ("raw" === i.type) s += `<span class="ipysigma-keyword">${H(c)}</span> ${t}`; else if ("continuous" === i.type) s += `<span class="ipysigma-keyword">${H(c)}</span> ${t} `, 
+                            if ("raw" === i.type) s += `<span class="ipysigma-keyword">${H_modified(c)}</span> ${t}`; else if ("continuous" === i.type) s += `<span class="ipysigma-keyword">${H_modified(c)}</span> ${t} `,
                             "string" == typeof i.range ? s += `(using the <span class="ipysigma-keyword">${i.range}</span> color scheme)` : "number" == typeof i.range[0] ? s += `(scaled to <span class="ipysigma-number">${i.range[0]}</span>-<span class="ipysigma-number">${i.range[1]}</span> px)` : s += `(from <span style="color: ${i.range[0]}">■</span> ${i.range[0]} to <span style="color: ${i.range[1]}">■</span> ${i.range[1]})`; else {
-                                s += `<span class="ipysigma-keyword">${H(c)}</span> ${t} as a category:`;
+                                s += `<span class="ipysigma-keyword">${H_modified(c)}</span> ${t} as a category:`;
                                 const i = [];
                                 if (o && "color" === o.kind) {
                                     const t = [];
