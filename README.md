@@ -81,10 +81,10 @@ For an exhaustive list of what visual variables you may tweak, check the "[Avail
 
 ## Installation
 
-You can this fork install using `pip`:
+You can install using `pip`:
 
 ```bash
-pip install git+https://github.com/jimnoneill/ipysigma.git@master
+pip install ipysigma
 ```
 
 You will also need to install either `networkx` or `igraph`.

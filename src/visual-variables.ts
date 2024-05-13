@@ -100,20 +100,6 @@ export type VisualVariables = {
 /**
  * Helper functions.
  */
-function sanitizeHtml(rawValue: string): string {
-    // Create a temporary element
-    const tempDiv = document.createElement('div');
-    tempDiv.textContent = rawValue; // Escapes HTML, preventing XSS
-    let safeHtml = tempDiv.innerHTML;
-
-    // Replace encoded line breaks with actual <br> element
-    safeHtml = safeHtml.replace(/&lt;br&gt;/gi, '<br>');
-    return safeHtml;
-}
-
-
-
-
 function isValidNumber(value: any): value is number {
   return (
     typeof value === 'number' &&
@@ -398,53 +384,44 @@ export class VisualVariableScalesBuilder {
       const variable = this.variables[variableName];
       let scale: AttributeScale | null = null;
 
-	// Raw variables
-	// Existing Raw Variable handling
-	if (variable.type === 'raw') {
-	    scale = (attr) => {
-		const rawValue = attr[variable.attribute] || variable.default;
-		return sanitizeHtml(rawValue);
-	    };
-	}
+      // Raw variables
+      if (variable.type === 'raw') {
+        scale = (attr) => attr[variable.attribute] || variable.default;
+      }
 
       // Constant variables
       else if (variable.type === 'constant') {
         scale = () => variable.default;
       }
 
-else if (variable.type === 'category') {
-  const categories = variableName.startsWith('node')
-    ? this.nodeCategories
-    : this.edgeCategories;
+      // Category variables
+      else if (variable.type === 'category') {
+        const categories = variableName.startsWith('node')
+          ? this.nodeCategories
+          : this.edgeCategories;
 
-  let summary: CategorySummary;
+        const summary =
+          variable.palette && typeof variable.palette !== 'string'
+            ? CategorySummary.fromEntries(
+                variable.attribute,
+                variable.kind || 'color',
+                variable.palette,
+                variable.default
+              )
+            : CategorySummary.fromTopValues(
+                variable.attribute,
+                variable.kind || 'color',
+                categories.attributes[variable.attribute],
+                variable.default,
+                variable.palette,
+                this.maxCategories
+              );
 
-  if (typeof variable.palette === 'string') {
-    // Handle as string
-    summary = CategorySummary.fromTopValues(
-      variable.attribute,
-      variable.kind || 'color',
-      categories.attributes[variable.attribute],
-      variable.default,
-      variable.palette,
-      this.maxCategories
-    );
-  } else {
-    // Handle as Entries<string>
-    summary = CategorySummary.fromEntries(
-      variable.attribute,
-      variable.kind || 'color',
-      variable.palette,
-      variable.default
-    );
-  }
+        const palette = summary.palette;
 
-  const palette = summary.palette;
-
-  scale = (attr) => palette.get(attr[variable.attribute]);
-  scale.summary = summary;
-}
-
+        scale = (attr) => palette.get(attr[variable.attribute]);
+        scale.summary = summary;
+      }
 
       // Continuous variables
       else if (variable.type === 'continuous') {
