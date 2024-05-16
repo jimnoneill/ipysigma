@@ -83,6 +83,7 @@ export type VisualVariables = {
   nodeBorderSize: VisualVariable;
   nodeSize: VisualVariable;
   nodeLabel: VisualVariable;
+  nodeDescription: VisualVariable;
   nodeLabelSize: VisualVariable;
   nodeLabelColor: VisualVariable;
   nodePictogram: VisualVariable;

@@ -540,7 +540,7 @@ export class SigmaView extends DOMWidgetView {
     this.resetLayoutButton = this.el.querySelector(
       '.ipysigma-reset-layout-button'
     ) as HTMLButtonElement;
-
+/*
     // Search
     var searchContainer = this.el.querySelector(
       '.ipysigma-search'
@@ -570,7 +570,58 @@ export class SigmaView extends DOMWidgetView {
       choices: options,
       itemSelectText: '',
       position: 'bottom',
-    });
+    });*/
+  // CSS to add a scroll bar to the dropdown
+  const style = document.createElement('style');
+  style.innerHTML = `
+    .choices__list--dropdown .choices__list {
+      max-height: 200px; /* Adjust the height as needed */
+      overflow-y: auto;
+    }
+  `;
+  document.head.appendChild(style);
+
+  // Search
+  var searchContainer = this.el.querySelector(
+    '.ipysigma-search'
+  ) as HTMLElement;
+
+  const nodeLabelAttribute = this.model.get('visual_variables').nodeLabel.attribute;
+  const nodeDescriptionAttribute = this.model.get('visual_variables').nodeDescription.attribute;
+
+  const options = graph.mapNodes((key, attr) => {
+    let labelParts = [escapeHtml(key)];
+
+    const label = attr[nodeLabelAttribute];
+    const description = attr[nodeDescriptionAttribute];
+
+    if (label && label !== key) {
+      labelParts.push(
+        ` <small style="font-size: 75%;">${escapeHtml(label)}</small>`
+      );
+    }
+
+    if (description) {
+      labelParts.push(
+        ` <small style="font-size: 60%; color: grey;">${escapeHtml(description)}</small>`
+      );
+    }
+
+    return { value: key, label: labelParts.join(' ') };
+  });
+
+  this.choices = new Choices(searchContainer, {
+    allowHTML: true,
+    removeItemButton: true,
+    renderChoiceLimit: 10,
+    choices: options,
+    itemSelectText: '',
+    position: 'bottom',
+    searchFields: ['label', nodeDescriptionAttribute], // Add nodeDescriptionAttribute to search fields
+  });
+
+
+
 
     this.informationDisplayElement = this.el.querySelector(
       '.ipysigma-information-display'
@@ -1361,7 +1412,7 @@ export class SigmaView extends DOMWidgetView {
       innerHTML += '<hr>Known viz data:<br>' + vizInfo.join('<br>');
 
     if (type === 'node') {
-      innerHTML += '<hr>Computed metrics:<br>';
+      innerHTML += '<hr>Additional metrics:<br>';
       innerHTML += `<b>degree</b> ${renderTypedValue(graph.degree(key))}<br>`;
 
       if (graph.directedSize !== 0) {
