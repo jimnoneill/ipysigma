@@ -588,23 +588,68 @@ export class SigmaView extends DOMWidgetView {
 
   const nodeLabelAttribute = this.model.get('visual_variables').nodeLabel.attribute;
   const nodeDescriptionAttribute = this.model.get('visual_variables').nodeDescription.attribute;
+  const nodeDirectAttribute = this.model.get('visual_variables').nodeDirect.attribute;
+  const nodeGlobalInfoAttribute = this.model.get('visual_variables').nodeGlobalInfo.attribute;  // Renamed from 'global'
+  const nodeDirectRankAttribute = this.model.get('visual_variables').nodeDirectRank.attribute;
+  const nodeGlobalRankAttribute = this.model.get('visual_variables').nodeGlobalRank.attribute;
+  const nodeIndirectAttribute = this.model.get('visual_variables').nodeIndirect.attribute;
+  const nodeIndirectRankAttribute = this.model.get('visual_variables').nodeIndirectRank.attribute;
+  const nodeCollaborationAttribute = this.model.get('visual_variables').nodeCollaboration.attribute;
+  const nodePublicationsAttribute = this.model.get('visual_variables').nodePublications.attribute;
 
   const options = graph.mapNodes((key, attr) => {
     let labelParts = [escapeHtml(key)];
 
     const label = attr[nodeLabelAttribute];
     const description = attr[nodeDescriptionAttribute];
+    const direct = attr[nodeDirectAttribute];
+    const globalInfo = attr[nodeGlobalInfoAttribute];
+    const directRank = attr[nodeDirectRankAttribute];
+    const globalRank = attr[nodeGlobalRankAttribute];
+    const indirect = attr[nodeIndirectAttribute];
+    const indirectRank = attr[nodeIndirectRankAttribute];
+    const collaboration = attr[nodeCollaborationAttribute];
+    const publications = attr[nodePublicationsAttribute];
 
     if (label && label !== key) {
-      labelParts.push(
-        ` <small style="font-size: 75%;">${escapeHtml(label)}</small>`
-      );
+      labelParts.push(` <small style="font-size: 75%;">${escapeHtml(label)}</small>`);
     }
 
     if (description) {
-      labelParts.push(
-        ` <small style="font-size: 60%; color: grey;">${escapeHtml(description)}</small>`
-      );
+      labelParts.push(` <small style="font-size: 60%; color: grey;">${escapeHtml(description)}</small>`);
+    }
+
+    // Additional attributes integration
+    if (direct) {
+      labelParts.push(` <small style="color: blue;">Direct: ${escapeHtml(direct)}</small>`);
+    }
+
+    if (globalInfo) {
+      labelParts.push(` <small style="color: green;">Global: ${escapeHtml(globalInfo)}</small>`);
+    }
+
+    if (directRank) {
+      labelParts.push(` <small>Direct Rank: ${escapeHtml(directRank)}</small>`);
+    }
+
+    if (globalRank) {
+      labelParts.push(` <small>Global Rank: ${escapeHtml(globalRank)}</small>`);
+    }
+
+    if (indirect) {
+      labelParts.push(` <small style="color: orange;">Indirect: ${escapeHtml(indirect)}</small>`);
+    }
+
+    if (indirectRank) {
+      labelParts.push(` <small>Indirect Rank: ${escapeHtml(indirectRank)}</small>`);
+    }
+
+    if (collaboration) {
+      labelParts.push(` <small style="color: purple;">Collaboration: ${escapeHtml(collaboration)}</small>`);
+    }
+
+    if (publications) {
+      labelParts.push(` <small>Publications: ${escapeHtml(publications)}</small>`);
     }
 
     return { value: key, label: labelParts.join(' ') };

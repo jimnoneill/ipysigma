@@ -321,13 +321,20 @@ def sort_items_per_zindex(name, items, sorter, item_type="node", is_directed=Tru
 
     items.sort(key=item_key)
 
-
 class VisualVariableBuilder(object):
     @staticmethod
     def get_default():
         return {
             "nodeLabel": {"type": "raw", "attribute": "label"},
             "nodeDescription": {"type": "raw", "attribute": "description"},
+            "nodeDirect": {"type": "raw", "attribute": "direct"},
+            "nodeGlobalInfo": {"type": "raw", "attribute": "global-info"},
+            "nodeDirectRank": {"type": "raw", "attribute": "direct-rank"},
+            "nodeGlobalRank": {"type": "raw", "attribute": "global-rank"},
+            "nodeIndirect": {"type": "raw", "attribute": "indirect"},
+            "nodeIndirectRank": {"type": "raw", "attribute": "indirect-rank"},
+            "nodeCollaboration": {"type": "raw", "attribute": "collaboration"},
+            "nodePublications": {"type": "raw", "attribute": "publications"},
             "nodeLabelSize": {"type": "constant", "default": DEFAULT_NODE_LABEL_SIZE},
             "nodeLabelColor": {"type": "constant", "default": DEFAULT_NODE_LABEL_COLOR},
             "nodeColor": {"type": "raw", "attribute": "color", "default": "#999"},
@@ -430,6 +437,227 @@ class VisualVariableBuilder(object):
             self.variables[name] = {"type": "disabled"}
 
         self.variables[name]["default"] = default
+
+    def build_raw3(
+        self, name, mapped, raw, default=None, kind="direct", variable_prefix=None
+    ):
+        raw = mapped or raw
+        item_type = "node" if name.startswith("node") else "edge"
+        items = self.nodes if item_type == "node" else self.edges
+
+        if raw is not None:
+            variable = {"type": "raw"}
+
+            variable["attribute"] = resolve_variable(
+                self.template(kind, prefix=variable_prefix, item_type=item_type),
+                items,
+                raw,
+                item_type=item_type,
+                is_directed=self.is_directed,
+            )
+
+            self.variables[name] = variable
+
+        elif default is not None:
+            self.variables[name] = {"type": "constant"}
+
+        else:
+            self.variables[name] = {"type": "disabled"}
+
+        self.variables[name]["default"] = default
+
+
+    def build_raw4(
+        self, name, mapped, raw, default=None, kind="global", variable_prefix=None
+    ):
+        raw = mapped or raw
+        item_type = "node" if name.startswith("node") else "edge"
+        items = self.nodes if item_type == "node" else self.edges
+
+        if raw is not None:
+            variable = {"type": "raw"}
+
+            variable["attribute"] = resolve_variable(
+                self.template(kind, prefix=variable_prefix, item_type=item_type),
+                items,
+                raw,
+                item_type=item_type,
+                is_directed=self.is_directed,
+            )
+
+            self.variables[name] = variable
+
+        elif default is not None:
+            self.variables[name] = {"type": "constant"}
+
+        else:
+            self.variables[name] = {"type": "disabled"}
+
+        self.variables[name]["default"] = default
+    def build_raw5(
+        self, name, mapped, raw, default=None, kind="direct-rank", variable_prefix=None
+    ):
+        raw = mapped or raw
+        item_type = "node" if name.startswith("node") else "edge"
+        items = self.nodes if item_type == "node" else self.edges
+
+        if raw is not None:
+            variable = {"type": "raw"}
+
+            variable["attribute"] = resolve_variable(
+                self.template(kind, prefix=variable_prefix, item_type=item_type),
+                items,
+                raw,
+                item_type=item_type,
+                is_directed=self.is_directed,
+            )
+
+            self.variables[name] = variable
+
+        elif default is not None:
+            self.variables[name] = {"type": "constant"}
+
+        else:
+            self.variables[name] = {"type": "disabled"}
+
+        self.variables[name]["default"] = default
+    def build_raw6(
+        self, name, mapped, raw, default=None, kind="global-rank", variable_prefix=None
+    ):
+        raw = mapped or raw
+        item_type = "node" if name.startswith("node") else "edge"
+        items = self.nodes if item_type == "node" else self.edges
+
+        if raw is not None:
+            variable = {"type": "raw"}
+
+            variable["attribute"] = resolve_variable(
+                self.template(kind, prefix=variable_prefix, item_type=item_type),
+                items,
+                raw,
+                item_type=item_type,
+                is_directed=self.is_directed,
+            )
+
+            self.variables[name] = variable
+
+        elif default is not None:
+            self.variables[name] = {"type": "constant"}
+
+        else:
+            self.variables[name] = {"type": "disabled"}
+
+        self.variables[name]["default"] = default
+    def build_raw7(
+        self, name, mapped, raw, default=None, kind="indirect", variable_prefix=None
+    ):
+        raw = mapped or raw
+        item_type = "node" if name.startswith("node") else "edge"
+        items = self.nodes if item_type == "node" else self.edges
+
+        if raw is not None:
+            variable = {"type": "raw"}
+
+            variable["attribute"] = resolve_variable(
+                self.template(kind, prefix=variable_prefix, item_type=item_type),
+                items,
+                raw,
+                item_type=item_type,
+                is_directed=self.is_directed,
+            )
+
+            self.variables[name] = variable
+
+        elif default is not None:
+            self.variables[name] = {"type": "constant"}
+
+        else:
+            self.variables[name] = {"type": "disabled"}
+
+        self.variables[name]["default"] = default
+    def build_raw8(
+        self, name, mapped, raw, default=None, kind="indirect-rank", variable_prefix=None
+    ):
+        raw = mapped or raw
+        item_type = "node" if name.startswith("node") else "edge"
+        items = self.nodes if item_type == "node" else self.edges
+
+        if raw is not None:
+            variable = {"type": "raw"}
+
+            variable["attribute"] = resolve_variable(
+                self.template(kind, prefix=variable_prefix, item_type=item_type),
+                items,
+                raw,
+                item_type=item_type,
+                is_directed=self.is_directed,
+            )
+
+            self.variables[name] = variable
+
+        elif default is not None:
+            self.variables[name] = {"type": "constant"}
+
+        else:
+            self.variables[name] = {"type": "disabled"}
+
+        self.variables[name]["default"] = default
+    def build_raw9(
+        self, name, mapped, raw, default=None, kind="collaboration", variable_prefix=None
+    ):
+        raw = mapped or raw
+        item_type = "node" if name.startswith("node") else "edge"
+        items = self.nodes if item_type == "node" else self.edges
+
+        if raw is not None:
+            variable = {"type": "raw"}
+
+            variable["attribute"] = resolve_variable(
+                self.template(kind, prefix=variable_prefix, item_type=item_type),
+                items,
+                raw,
+                item_type=item_type,
+                is_directed=self.is_directed,
+            )
+
+            self.variables[name] = variable
+
+        elif default is not None:
+            self.variables[name] = {"type": "constant"}
+
+        else:
+            self.variables[name] = {"type": "disabled"}
+
+        self.variables[name]["default"] = default
+
+    def build_raw10(
+        self, name, mapped, raw, default=None, kind="publications", variable_prefix=None
+    ):
+        raw = mapped or raw
+        item_type = "node" if name.startswith("node") else "edge"
+        items = self.nodes if item_type == "node" else self.edges
+
+        if raw is not None:
+            variable = {"type": "raw"}
+
+            variable["attribute"] = resolve_variable(
+                self.template(kind, prefix=variable_prefix, item_type=item_type),
+                items,
+                raw,
+                item_type=item_type,
+                is_directed=self.is_directed,
+            )
+
+            self.variables[name] = variable
+
+        elif default is not None:
+            self.variables[name] = {"type": "constant"}
+
+        else:
+            self.variables[name] = {"type": "disabled"}
+
+        self.variables[name]["default"] = default
+
     def build_continuous(
         self,
         name,

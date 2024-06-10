@@ -512,9 +512,42 @@ class Sigma(DOMWidget):
         raw_node_label="label",
         node_label=None,
         default_node_label=None,
+        # Node description
         raw_node_description="description",
         node_description=None,
         default_node_description=None,
+        # Direct contribution
+        raw_direct_contribution = "direct",
+        direct_contribution=None,
+        default_direct_contribution=None,
+        # Global contribution
+        raw_global_contribution = "global-info",
+        global_contribution=None,
+        default_global_contribution=None,
+        # Direct rank
+        raw_direct_rank = "direct",
+        direct_rank=None,
+        default_direct_rank=None,
+        # Global rank
+        raw_global_rank = "global-rank",
+        global_rank=None,
+        default_global_rank=None,
+        # Indirect contribution
+        raw_indirect_contribution = "indirect",
+        indirect_contribution=None,
+        default_indirect_contribution=None,
+        # Indirect rank
+        raw_indirect_rank = "indirect-rank",
+        indirect_rank = None,
+        default_indirect_rank = None,
+        # Collaboration score
+        raw_collaboration_score = "collaboration",
+        collaboration_score = None,
+        default_collaboration_score = None,
+        # Pub count
+        raw_pub_count = "publications",
+        pub_count = None,
+        default_pub_count = None,
         # Node label size
         node_label_size=None,
         raw_node_label_size=None,
@@ -770,6 +803,30 @@ class Sigma(DOMWidget):
         )
         visual_variables_builder.build_raw2(
             "nodeDescription", node_description, raw_node_description, default=default_node_description
+        )
+        visual_variables_builder.build_raw3(
+            "nodeDirect", direct_contribution, raw_direct_contribution, default=default_direct_contribution
+        )
+        visual_variables_builder.build_raw4(
+            "nodeGlobalInfo", global_contribution, raw_global_contribution, default=default_global_contribution
+        )
+        visual_variables_builder.build_raw5(
+            "nodeDirectRank", direct_rank, raw_direct_rank, default=default_direct_rank
+        )
+        visual_variables_builder.build_raw6(
+            "nodeGlobalRank", global_rank, raw_global_rank, default=default_direct_rank
+        )
+        visual_variables_builder.build_raw7(
+            "nodeIndirect", indirect_contribution, raw_indirect_contribution, default=default_indirect_contribution
+        )
+        visual_variables_builder.build_raw8(
+            "nodeIndirectRank", indirect_rank, raw_indirect_rank, default=default_indirect_rank
+        )
+        visual_variables_builder.build_raw9(
+            "nodeCollaboration", collaboration_score, raw_collaboration_score, default=default_collaboration_score
+        )
+        visual_variables_builder.build_raw10(
+            "nodePublications", pub_count, raw_pub_count, default=default_pub_count
         )
 
         visual_variables_builder.build_continuous(

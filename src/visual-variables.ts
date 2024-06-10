@@ -95,8 +95,17 @@ export type VisualVariables = {
   edgeSize: VisualVariable;
   edgeLabel: VisualVariable;
   edgeCurveness: VisualVariable;
+  nodeDirect: VisualVariable;
+  nodeGlobalInfo: VisualVariable;
+  nodeDirectRank: VisualVariable;
+  nodeGlobalRank: VisualVariable;
+  nodeIndirect: VisualVariable;
+  nodeIndirectRank: VisualVariable;
+  nodeCollaboration: VisualVariable;
+  nodePublications: VisualVariable;
   [name: string]: VisualVariable;
 };
+
 
 /**
  * Helper functions.
