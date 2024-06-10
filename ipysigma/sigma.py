@@ -261,6 +261,22 @@ class Sigma(DOMWidget):
             Defaults to None.
         node_description (VariableData, optional): data to be used as node description.
             Defaults to None.
+        direct_contribution (VariableData, optional): data to be used as node description.
+            Defaults to None.
+        global_contribution (VariableData, optional): data to be used as node description.
+            Defaults to None.
+        direct_rank (VariableData, optional): data to be used as node description.
+            Defaults to None.
+        global_rank (VariableData, optional): data to be used as node description.
+            Defaults to None.
+        indirect_contribution (VariableData, optional): data to be used as node description.
+            Defaults to None.
+        indirect_rank (VariableData, optional): data to be used as node description.
+            Defaults to None.
+        collaboration_score (VariableData, optional): data to be used as node description.
+            Defaults to None.
+        pub_count (VariableData, optional): data to be used as node description.
+            Defaults to None.
         raw_node_label (VariableData, optional): raw data (label string) to be used for node labels.
             Defaults to "label".
         default_node_label (str, optional): default label for nodes.
@@ -517,35 +533,35 @@ class Sigma(DOMWidget):
         node_description=None,
         default_node_description=None,
         # Direct contribution
-        raw_direct_contribution = "direct",
+        raw_direct_contribution = "direct_contribution",
         direct_contribution=None,
         default_direct_contribution=None,
         # Global contribution
-        raw_global_contribution = "global-info",
+        raw_global_contribution = "global_contribution",
         global_contribution=None,
         default_global_contribution=None,
         # Direct rank
-        raw_direct_rank = "direct",
+        raw_direct_rank = "direct_contribution",
         direct_rank=None,
         default_direct_rank=None,
         # Global rank
-        raw_global_rank = "global-rank",
+        raw_global_rank = "global_rank",
         global_rank=None,
         default_global_rank=None,
         # Indirect contribution
-        raw_indirect_contribution = "indirect",
+        raw_indirect_contribution = "indirect_contribution",
         indirect_contribution=None,
         default_indirect_contribution=None,
         # Indirect rank
-        raw_indirect_rank = "indirect-rank",
+        raw_indirect_rank = "indirect_rank",
         indirect_rank = None,
         default_indirect_rank = None,
         # Collaboration score
-        raw_collaboration_score = "collaboration",
+        raw_collaboration_score = "collaboration_count",
         collaboration_score = None,
         default_collaboration_score = None,
         # Pub count
-        raw_pub_count = "publications",
+        raw_pub_count = "author_publications",
         pub_count = None,
         default_pub_count = None,
         # Node label size
@@ -814,7 +830,7 @@ class Sigma(DOMWidget):
             "nodeDirectRank", direct_rank, raw_direct_rank, default=default_direct_rank
         )
         visual_variables_builder.build_raw6(
-            "nodeGlobalRank", global_rank, raw_global_rank, default=default_direct_rank
+            "nodeGlobalRank", global_rank, raw_global_rank, default=default_global_rank
         )
         visual_variables_builder.build_raw7(
             "nodeIndirect", indirect_contribution, raw_indirect_contribution, default=default_indirect_contribution

@@ -327,14 +327,14 @@ class VisualVariableBuilder(object):
         return {
             "nodeLabel": {"type": "raw", "attribute": "label"},
             "nodeDescription": {"type": "raw", "attribute": "description"},
-            "nodeDirect": {"type": "raw", "attribute": "direct"},
-            "nodeGlobalInfo": {"type": "raw", "attribute": "global-info"},
-            "nodeDirectRank": {"type": "raw", "attribute": "direct-rank"},
-            "nodeGlobalRank": {"type": "raw", "attribute": "global-rank"},
+            "nodeDirect": {"type": "raw", "attribute": "direct_contribution"},
+            "nodeGlobalInfo": {"type": "raw", "attribute": "global_contribution"},
+            "nodeDirectRank": {"type": "raw", "attribute": "direct_contribution"},
+            "nodeGlobalRank": {"type": "raw", "attribute": "global_contribution"},
             "nodeIndirect": {"type": "raw", "attribute": "indirect"},
-            "nodeIndirectRank": {"type": "raw", "attribute": "indirect-rank"},
-            "nodeCollaboration": {"type": "raw", "attribute": "collaboration"},
-            "nodePublications": {"type": "raw", "attribute": "publications"},
+            "nodeIndirectRank": {"type": "raw", "attribute": "indirect_contribution"},
+            "nodeCollaboration": {"type": "raw", "attribute": "collaboration_count"},
+            "nodePublications": {"type": "raw", "attribute": "author_publications"},
             "nodeLabelSize": {"type": "constant", "default": DEFAULT_NODE_LABEL_SIZE},
             "nodeLabelColor": {"type": "constant", "default": DEFAULT_NODE_LABEL_COLOR},
             "nodeColor": {"type": "raw", "attribute": "color", "default": "#999"},
@@ -439,7 +439,7 @@ class VisualVariableBuilder(object):
         self.variables[name]["default"] = default
 
     def build_raw3(
-        self, name, mapped, raw, default=None, kind="direct", variable_prefix=None
+        self, name, mapped, raw, default=None, kind="direct_contribution", variable_prefix=None
     ):
         raw = mapped or raw
         item_type = "node" if name.startswith("node") else "edge"
@@ -468,7 +468,7 @@ class VisualVariableBuilder(object):
 
 
     def build_raw4(
-        self, name, mapped, raw, default=None, kind="global", variable_prefix=None
+        self, name, mapped, raw, default=None, kind="global_contribution", variable_prefix=None
     ):
         raw = mapped or raw
         item_type = "node" if name.startswith("node") else "edge"
@@ -495,7 +495,7 @@ class VisualVariableBuilder(object):
 
         self.variables[name]["default"] = default
     def build_raw5(
-        self, name, mapped, raw, default=None, kind="direct-rank", variable_prefix=None
+        self, name, mapped, raw, default=None, kind="direct_rank", variable_prefix=None
     ):
         raw = mapped or raw
         item_type = "node" if name.startswith("node") else "edge"
@@ -522,7 +522,7 @@ class VisualVariableBuilder(object):
 
         self.variables[name]["default"] = default
     def build_raw6(
-        self, name, mapped, raw, default=None, kind="global-rank", variable_prefix=None
+        self, name, mapped, raw, default=None, kind="global_rank", variable_prefix=None
     ):
         raw = mapped or raw
         item_type = "node" if name.startswith("node") else "edge"
@@ -549,7 +549,7 @@ class VisualVariableBuilder(object):
 
         self.variables[name]["default"] = default
     def build_raw7(
-        self, name, mapped, raw, default=None, kind="indirect", variable_prefix=None
+        self, name, mapped, raw, default=None, kind="indirect_contribution", variable_prefix=None
     ):
         raw = mapped or raw
         item_type = "node" if name.startswith("node") else "edge"
@@ -576,7 +576,7 @@ class VisualVariableBuilder(object):
 
         self.variables[name]["default"] = default
     def build_raw8(
-        self, name, mapped, raw, default=None, kind="indirect-rank", variable_prefix=None
+        self, name, mapped, raw, default=None, kind="indirect_rank", variable_prefix=None
     ):
         raw = mapped or raw
         item_type = "node" if name.startswith("node") else "edge"
@@ -603,7 +603,7 @@ class VisualVariableBuilder(object):
 
         self.variables[name]["default"] = default
     def build_raw9(
-        self, name, mapped, raw, default=None, kind="collaboration", variable_prefix=None
+        self, name, mapped, raw, default=None, kind="collaboration_count", variable_prefix=None
     ):
         raw = mapped or raw
         item_type = "node" if name.startswith("node") else "edge"
@@ -631,7 +631,7 @@ class VisualVariableBuilder(object):
         self.variables[name]["default"] = default
 
     def build_raw10(
-        self, name, mapped, raw, default=None, kind="publications", variable_prefix=None
+        self, name, mapped, raw, default=None, kind="author_publications", variable_prefix=None
     ):
         raw = mapped or raw
         item_type = "node" if name.startswith("node") else "edge"
